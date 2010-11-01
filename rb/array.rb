@@ -1,4 +1,5 @@
 #forritunarmal forritunarverkefni2
+#Thordur Bjarki Arnarson
 #27.10.10
 #Problem 1
 
