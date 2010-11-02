@@ -63,47 +63,55 @@ class Card
 		return s
 	end
 	
+	#fix checks !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	def <=>(aCardIn)
 		#suits are the same
 		if (self.getSuit == aCardIn.getSuit) then
-			if aCardIn.getValue > 1 || aCardIn.getValue < 9 then
+			if aCardIn.getValue > 1 || aCardIn.getValue <= 9 then
 				
-				if self.getValue < aCardIn.getValue then
-					puts "value HIGHER"
+				if self.getValue > aCardIn.getValue then
+					puts ".self value HIGHER"
 					return 1
 				end
 		
-			puts "value LOWER"
-			return -1
-			end
-			puts "here"
+				puts ".self value LOWER"
+				return -1
+				end
+				puts "here"
+		elsif aCardIn.getValue < 1 ||  aCardIn.getValue >9
+			return 0
+			puts "invalid number"
 		end
 		
-		#self suit is HIGHER then input
+		#.self suit is HIGHER then input
 		if (self.getSuit == "spade" && aCardIn.getSuit != "spade") ||
 		   (self.getSuit == "heart" && aCardIn.getSuit != "spade") ||
 		   (self.getSuit == "diamond" && aCardIn.getSuit != "heart") ||
 		   (self.getSuit == "diamond" && aCardIn.getSuit != "spade") then
-			puts "suit HIGHER"
+			puts ".self suit HIGHER !!!!!"
 			return 1
-
-		end
 		
-		#self suit is LOWER the input
-		if (self.getSuit == "heart" && aCardIn.getSuit == "spade") then
+		else
 			return -1
+#		#self suit is LOWER the input
+#		if (self.getSuit == "heart" && aCardIn.getSuit == "spade") then
+#			return -1
+#		end
 		end
 	end
 end
 
 # ----- CardTest
 
-c1 = Card.new(Card::DIAMOND, 5)
+c1 = Card.new(Card::DIAMOND, 6)
 puts c1.to_s
-c2 = Card.new(Card::DIAMOND, 3)
+c2 = Card.new(Card::DIAMOND, 10)
 puts c2.to_s
+c3 = Card.new(Card::HEART, 14)
+puts c3.to_s
 
 puts(c1 <=> c2)
+puts(c3 <=> c1)
 
 # ------------- CardDeck -------------
 
