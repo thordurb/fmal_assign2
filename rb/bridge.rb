@@ -101,7 +101,7 @@ class Card
 	end
 end
 
-# ----- CardTest
+# ----- CardTest -------------
 
 c1 = Card.new(Card::DIAMOND, 6)
 puts c1.to_s
@@ -115,12 +115,21 @@ puts(c3 <=> c1)
 
 # ------------- CardDeck -------------
 
-#class CardDeck < Array
-#	def initilize
-#		@aSuit = Card.getSuite
-#	end
-#	
-#	def initSuite
-#	
-#	end
-#end
+class CardDeck < Array
+	def initialize
+		puts "Newed"
+		@suitNames = ["CLUB", "DIAMOND", "HEART", "SPADE"]
+		@suits = Array.new(4){|v| initSuit("#{suitNamses[v]}")}
+		puts @suits
+	end
+	
+	def initSuit(suitNameIn)
+		@aSuit = Array.new(13){|v| Card.new(suitNameIn,v+2)}
+	end
+end
+
+# ----- CardDeckTest -------------
+
+cd1 = CardDeck.new
+#cd1.initilize
+#cd1.initSuit("SPADE")
