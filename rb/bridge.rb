@@ -34,9 +34,7 @@ class Card
 	end
 
 	def to_s
-		return @suit + " " + valueToString(@value) + " \n"
-#		return #{@suit} #{valueToString(@value)}
-#		return @suit + " " + @value.to_s		
+		return @suit + " " + valueToString(@value) + ""	
 	end
 	
 	def <=>(aCardIn)
@@ -62,21 +60,14 @@ puts(c3 <=> c1)
 class CardDeck < Array
 
 	private
-	
 	def initialize	
 		@@suitNames = [Card::CLUB, Card::DIAMOND, Card::HEART, Card::SPADE]	
 		@@suitNames.each{|v| initSuit(v)}
-		
-			#		@suits = Array.new(4){|v| initSuit("HEART")}
 	end
 	
 	def initSuit(suitNameIn)
-	
 		index = (2..14).to_a
 		index.each{|v| push(Card.new(suitNameIn, v))}
-		
-			#		@aSuit = Array.new(13){|v| Card.new(suitNameIn,v+2)}
-			#		aSuit.each{|key, value| puts "#{key} and #{value}"}
 	end
 	
 	def swap(anIndex1, anIndex2)
@@ -84,9 +75,8 @@ class CardDeck < Array
 	end
 	
 	public 
-	
 	def next
-		self.next
+		return self.shift
 	end
 	
 	def shuffle
@@ -94,27 +84,60 @@ class CardDeck < Array
 	end
 	
 	def to_s
-		
+		return self.inject(0){|v, n| print "<#{n}>"}
 	end
 end
 
 # ----- CardDeckTest -------------
 puts "========CardDeckTest========"
+puts "CardDeck clean"
+deck = CardDeck.new
+puts deck.to_s
+puts
+puts "CardDeck shuffled"
+deck.shuffle
+puts deck.to_s
+puts
 
-cd1 = CardDeck.new
-#cd1.initialize
-#cd1.initSuit("SPADE")
-#cd1.shuffle
-print cd1
-
-# ----- CardHands -------------
+# ----- CardHand -------------
 class CardHand < Array
+	
 	public 
+	# TODO return sorted array of 13 cards
+	def getCards(aDeck)
+		return 13.times{self << aDeck.next}	
+	end
 	
-	def GetCards
-	#	Array.new(13){CardDeck.next}
-	
-		13.times
-		self << CardDeck.next
+	def to_s
+		return self.inject(0){|v, n| print "<#{n}>"}
 	end
 end
+
+#-------------- CardHandTest -----------
+puts "==========CardHandTest=========="
+hand = CardHand.new
+hand.getCards(deck)
+puts hand.to_s
+
+class Bridge
+	@west
+	@north
+	@east
+	@south
+	@deck
+	
+	private
+	def initalize	
+		
+	end
+	
+	public
+	attr_accessor :west, :north, :east, :south, :deck
+	
+	
+end
+
+
+
+
+
