@@ -13,95 +13,39 @@ class Card
 	@suit
 	@value
 
-	private :initialize
+	attr_accessor :suit
+	attr_accessor :value
+	
+	private 
 	
 	def initialize(aSuit, aValue)
 		@suit = aSuit
 		@value = aValue	
 	end
-
-	def getSuit
-		return @suit
-	end
-	
-	def setSuit(aSuit)
-		@suit = asSuit
-	end
-	
-	def getValue
-		return @value
-	end
-	
-	def setValue(aValue)
-		@value = aVales
-	end
-	
-	def valueToString(aValue)
-		if aValue <= 9 then
-			print aValue
-		end
-		if aValue == 10 then 
-			print "T"
-		end
-		if aValue == 11 then
-			print "J"
-		end
-		if aValue == 12 then 
-			print "Q"
-		end
-		if aValue == 13 then 
-			print "K"
-		end
-		if aValue == 14 then
-			print "A"
-		end
-		#else print "invalid entry"
-	end						
-	
-	def to_s
-		s = @suit + " " + @value.to_s
-		return s
-	end
-	
-	#fix checks !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	def <=>(aCardIn)
-		#suits are the same
-		if (self.getSuit == aCardIn.getSuit) then
-			if aCardIn.getValue > 1 || aCardIn.getValue <= 9 then
-				
-				if self.getValue > aCardIn.getValue then
-					puts ".self value HIGHER"
-					return 1
-				end
 		
-				puts ".self value LOWER"
-				return -1
-				end
-				puts "here"
-		elsif aCardIn.getValue < 1 ||  aCardIn.getValue >9
-			return 0
-			puts "invalid number"
-		end
+	public
 		
-		#.self suit is HIGHER then input
-		if (self.getSuit == "spade" && aCardIn.getSuit != "spade") ||
-		   (self.getSuit == "heart" && aCardIn.getSuit != "spade") ||
-		   (self.getSuit == "diamond" && aCardIn.getSuit != "heart") ||
-		   (self.getSuit == "diamond" && aCardIn.getSuit != "spade") then
-			puts ".self suit HIGHER !!!!!"
-			return 1
-		
+	def valueToString(aValue)		
+		if aValue <= 9
+			return aValue.to_s
 		else
-			return -1
-#		#self suit is LOWER the input
-#		if (self.getSuit == "heart" && aCardIn.getSuit == "spade") then
-#			return -1
-#		end
+			return (aValue==10 ? 'T': (aValue==11 ? 'J': (aValue==12 ? 'Q':(aValue==13 ? 'K':'A')))) 
 		end
+	end
+
+	def to_s
+		return @suit + " " + valueToString(@value) + " "
+#		return #{@suit} #{valueToString(@value)}
+#		return @suit + " " + @value.to_s		
+	end
+	
+	def <=>(aCardIn)
+		return ((self.suit <=> aCardIn.suit) == 0 ? self.value <=> aCardIn.value : self.suit <=> aCardIn.suit)
 	end
 end
 
 # ----- CardTest -------------
+puts "=====CardTest====="
 
 c1 = Card.new(Card::DIAMOND, 6)
 puts c1.to_s
@@ -116,20 +60,57 @@ puts(c3 <=> c1)
 # ------------- CardDeck -------------
 
 class CardDeck < Array
-	def initialize
-		puts "Newed"
-		@suitNames = ["CLUB", "DIAMOND", "HEART", "SPADE"]
-		@suits = Array.new(4){|v| initSuit("#{suitNamses[v]}")}
-		puts @suits
+
+	private
+	
+	def initialize	
+		@@suitNames = [Card::CLUB, Card::DIAMOND, Card::HEART, Card::SPADE]	
+		@@suitNames.each{|v| initSuit(v)}
+		
+			#		@suits = Array.new(4){|v| initSuit("HEART")}
 	end
 	
 	def initSuit(suitNameIn)
-		@aSuit = Array.new(13){|v| Card.new(suitNameIn,v+2)}
+	
+		index = (2..14).to_a
+		index.each{|v| push(Card.new(suitNameIn, v))}
+		
+			#		@aSuit = Array.new(13){|v| Card.new(suitNameIn,v+2)}
+			#		aSuit.each{|key, value| puts "#{key} and #{value}"}
+	end
+	
+	def swap(anIndex1, anIndex2)
+		self[anIndex1], self[anIndex2] = self[anIndex2], self[anIndex1]
+	end
+	
+	public 
+	
+	def next
+		self.next
+	end
+	
+	def shuffle
+		
 	end
 end
 
 # ----- CardDeckTest -------------
+puts "========CardDeckTest========"
 
 cd1 = CardDeck.new
-#cd1.initilize
+#cd1.initialize
 #cd1.initSuit("SPADE")
+
+print cd1
+
+# ----- CardHands -------------
+class CardHand < Array
+	public 
+	
+	def GetCards
+	#	Array.new(13){CardDeck.next}
+	
+		13.times
+		self << CardDeck.next
+	end
+end

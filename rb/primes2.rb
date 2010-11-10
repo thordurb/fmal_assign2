@@ -37,4 +37,4 @@ class Integer
 end
 
 # ------------- print out ------------- 
-p 29.primesUpto2
+p 29.primesUpto2.compact
