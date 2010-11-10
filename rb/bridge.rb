@@ -34,7 +34,7 @@ class Card
 	end
 
 	def to_s
-		return @suit + " " + valueToString(@value) + " "
+		return @suit + " " + valueToString(@value) + " \n"
 #		return #{@suit} #{valueToString(@value)}
 #		return @suit + " " + @value.to_s		
 	end
@@ -90,6 +90,10 @@ class CardDeck < Array
 	end
 	
 	def shuffle
+		26.times{swap(rand(26), rand(26)+26)}		
+	end
+	
+	def to_s
 		
 	end
 end
@@ -100,7 +104,7 @@ puts "========CardDeckTest========"
 cd1 = CardDeck.new
 #cd1.initialize
 #cd1.initSuit("SPADE")
-
+#cd1.shuffle
 print cd1
 
 # ----- CardHands -------------
